@@ -37,6 +37,25 @@ namespace MaksNeBey.Data
                 Title = title
             };
             Games.Add(game);
+            SaveChanges();
+        }
+
+        public void GameEdit(int id, string title, decimal price) 
+        {
+            var item = Games.FirstOrDefault(i=>i.GameID == id);
+            if (item != null) 
+            {
+                item.Price = price;
+                item.Title = title;
+            }
+            SaveChanges();
+        }
+
+        public void GameRemove(int id) 
+        {
+            var item = Games.SingleOrDefault(i => i.GameID == id);
+            Games.Remove(item);
+            SaveChanges();
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

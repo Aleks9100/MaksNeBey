@@ -49,15 +49,19 @@ namespace MaksNeBey.Controllers
         }
 
         // PUT api/<GameAPIController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("/api/games/{id}")]
+        public IActionResult Put([FromBody] GameViewModel model, int id)
         {
+            _db.GameEdit(id, model.Title, model.Price);
+            return Ok(model);
         }
 
         // DELETE api/<GameAPIController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("/api/games/{id}")]
+        public IActionResult Delete(int id)
         {
+            _db.GameRemove(id);
+            return Ok();
         }
     }
 }
