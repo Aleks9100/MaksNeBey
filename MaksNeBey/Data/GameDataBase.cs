@@ -26,36 +26,36 @@ namespace MaksNeBey.Data
         }
         public DbSet<Game> Games { get; set; }
 
-        public void GameAdd(string title,decimal price) 
+        public async Task GameAdd(string title,decimal price) 
         {
             int id = 0;
-            foreach (var ID in Games.ToList()) { id = ID.GameID; }
+            foreach (var ID in await Games.ToListAsync()) { id = ID.GameID; }
             var game = new Game
             {
                 GameID = id + 1,
                 Price = price,
                 Title = title
             };
-            Games.Add(game);
-            SaveChanges();
+            await Games.AddAsync(game);
+            await SaveChangesAsync();
         }
 
-        public void GameEdit(int id, string title, decimal price) 
+        public async Task GameEdit(int id, string title, decimal price) 
         {
-            var item = Games.FirstOrDefault(i=>i.GameID == id);
+            var item = await Games.FirstOrDefaultAsync(i=>i.GameID == id);
             if (item != null) 
             {
                 item.Price = price;
                 item.Title = title;
             }
-            SaveChanges();
+            await SaveChangesAsync();
         }
 
-        public void GameRemove(int id) 
+        public async Task GameRemove(int id) 
         {
-            var item = Games.SingleOrDefault(i => i.GameID == id);
+            var item = await Games.SingleOrDefaultAsync(i => i.GameID == id);
             Games.Remove(item);
-            SaveChanges();
+            await SaveChangesAsync();
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
