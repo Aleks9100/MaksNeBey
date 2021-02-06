@@ -41,9 +41,11 @@ namespace MaksNeBey.Controllers
         }
 
         // POST api/<GameAPIController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPost ("/api/games/add")]
+        public IActionResult Post([FromBody] GameViewModel model)
         {
+            _db.GameAdd(model.Title,model.Price);
+            return Ok(model);
         }
 
         // PUT api/<GameAPIController>/5
